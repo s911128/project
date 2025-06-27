@@ -4,8 +4,8 @@ from datetime import date
 
 api_key = "a0b4f66866fd6b6a92486a7edc7dccb47925cb6d8c8748be5de9c31ec2ccb88b"
 
-departure_id = "TPE"     #出發地(機場代碼是三個大寫的字母代碼)
-arrival_id = "HND"       #目的地
+departure_id = "TPE,TSA"     #出發地(機場代碼是三個大寫的字母代碼)
+arrival_id = "HND,NRT"       #目的地
 outbound_date = "2025-06-28"       #去程日期
 #return_date = "2024-09-30"         #回程日期
 currency = "TWD"                   #貨幣單位
@@ -23,9 +23,13 @@ data = response.json()
 # print(response)
 print(data)
 
-file_name = "flight_ticket_"+str(date.today())+".json"
+file_name = "flight_ticket1_"+str(date.today())+".json"
 obj=open(file_name,"w", encoding="utf-8")
 json.dump(data,obj,ensure_ascii=False,indent=4)  #寫入json檔
 print("寫入json成功")
+
+
+
+
 
 
