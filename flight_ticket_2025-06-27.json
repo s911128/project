@@ -1,0 +1,345 @@
+{
+    "search_metadata": {
+        "id": "685e41dc5c262277187c8d1a",
+        "status": "Success",
+        "json_endpoint": "https://serpapi.com/searches/a59b51cafac93186/685e41dc5c262277187c8d1a.json",
+        "created_at": "2025-06-27 07:01:48 UTC",
+        "processed_at": "2025-06-27 07:01:48 UTC",
+        "google_flights_url": "https://www.google.com/travel/flights?hl=zh-tw&gl=us&curr=TWD&tfs=CBwQAhogEgoyMDI1LTA2LTI4KABqBwgBEgNUUEVyBwgBEgNITkRCAQFIAXABmAEC&tfu=EgIIAQ",
+        "raw_html_file": "https://serpapi.com/searches/a59b51cafac93186/685e41dc5c262277187c8d1a.html",
+        "prettify_html_file": "https://serpapi.com/searches/a59b51cafac93186/685e41dc5c262277187c8d1a.prettify",
+        "total_time_taken": 1.25
+    },
+    "search_parameters": {
+        "engine": "google_flights",
+        "hl": "zh-tw",
+        "gl": "us",
+        "type": "2",
+        "departure_id": "TPE",
+        "arrival_id": "HND",
+        "outbound_date": "2025-06-28",
+        "stops": 1,
+        "currency": "TWD"
+    },
+    "other_flights": [
+        {
+            "flights": [
+                {
+                    "departure_airport": {
+                        "name": "臺灣桃園國際機場",
+                        "id": "TPE",
+                        "time": "2025-06-28 20:25"
+                    },
+                    "arrival_airport": {
+                        "name": "東京國際機場(羽田機場)",
+                        "id": "HND",
+                        "time": "2025-06-29 00:45"
+                    },
+                    "duration": 200,
+                    "airplane": "Airbus A320neo",
+                    "airline": "樂桃航空",
+                    "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/MM.png",
+                    "travel_class": "Economy",
+                    "flight_number": "MM 860",
+                    "extensions": [
+                        "Carbon emissions estimate: 142 kg"
+                    ]
+                }
+            ],
+            "total_duration": 200,
+            "carbon_emissions": {
+                "this_flight": 142000,
+                "typical_for_this_route": 181000,
+                "difference_percent": -22
+            },
+            "price": 8210,
+            "type": "One way",
+            "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/MM.png",
+            "booking_token": "WyJDalJJYlY5T1dXTnFjM0ZLT0ZGQlFrdDFjRkZDUnkwdExTMHRMUzB0TFhscFltUmxORUZCUVVGQlIyaGxVV1F3VFVNMVpIRkJFZ1ZOVFRnMk1Cb0tDSkpBRUFBYUExUlhSRGdjY0pMZUFRPT0iLFtbIlRQRSIsIjIwMjUtMDYtMjgiLCJITkQiLG51bGwsIk1NIiwiODYwIl1dXQ=="
+        }
+    ],
+    "price_insights": {
+        "lowest_price": 8210,
+        "price_level": "high",
+        "typical_price_range": [
+            4400,
+            6000
+        ],
+        "price_history": [
+            [
+                1745769600,
+                4950
+            ],
+            [
+                1745856000,
+                4950
+            ],
+            [
+                1745942400,
+                4950
+            ],
+            [
+                1746028800,
+                4950
+            ],
+            [
+                1746115200,
+                4950
+            ],
+            [
+                1746201600,
+                4950
+            ],
+            [
+                1746288000,
+                4950
+            ],
+            [
+                1746374400,
+                4430
+            ],
+            [
+                1746460800,
+                4950
+            ],
+            [
+                1746547200,
+                4950
+            ],
+            [
+                1746633600,
+                4950
+            ],
+            [
+                1746720000,
+                4950
+            ],
+            [
+                1746806400,
+                4950
+            ],
+            [
+                1746892800,
+                4950
+            ],
+            [
+                1746979200,
+                4950
+            ],
+            [
+                1747065600,
+                4430
+            ],
+            [
+                1747152000,
+                4430
+            ],
+            [
+                1747238400,
+                4430
+            ],
+            [
+                1747324800,
+                4950
+            ],
+            [
+                1747411200,
+                4950
+            ],
+            [
+                1747497600,
+                4950
+            ],
+            [
+                1747584000,
+                4950
+            ],
+            [
+                1747670400,
+                4950
+            ],
+            [
+                1747756800,
+                4950
+            ],
+            [
+                1747843200,
+                4950
+            ],
+            [
+                1747929600,
+                5450
+            ],
+            [
+                1748016000,
+                5450
+            ],
+            [
+                1748102400,
+                5450
+            ],
+            [
+                1748188800,
+                4950
+            ],
+            [
+                1748275200,
+                4950
+            ],
+            [
+                1748361600,
+                4950
+            ],
+            [
+                1748448000,
+                5450
+            ],
+            [
+                1748534400,
+                5450
+            ],
+            [
+                1748620800,
+                5450
+            ],
+            [
+                1748707200,
+                5450
+            ],
+            [
+                1748793600,
+                5450
+            ],
+            [
+                1748880000,
+                5450
+            ],
+            [
+                1748966400,
+                5450
+            ],
+            [
+                1749052800,
+                5450
+            ],
+            [
+                1749139200,
+                5450
+            ],
+            [
+                1749225600,
+                5950
+            ],
+            [
+                1749312000,
+                5450
+            ],
+            [
+                1749398400,
+                5950
+            ],
+            [
+                1749484800,
+                5950
+            ],
+            [
+                1749571200,
+                5950
+            ],
+            [
+                1749657600,
+                5950
+            ],
+            [
+                1749744000,
+                5950
+            ],
+            [
+                1749830400,
+                5950
+            ],
+            [
+                1749916800,
+                5950
+            ],
+            [
+                1750003200,
+                5950
+            ],
+            [
+                1750089600,
+                5950
+            ],
+            [
+                1750176000,
+                5950
+            ],
+            [
+                1750262400,
+                5950
+            ],
+            [
+                1750348800,
+                5950
+            ],
+            [
+                1750435200,
+                6710
+            ],
+            [
+                1750521600,
+                6710
+            ],
+            [
+                1750608000,
+                7410
+            ],
+            [
+                1750694400,
+                7410
+            ],
+            [
+                1750780800,
+                8210
+            ],
+            [
+                1750867200,
+                8210
+            ],
+            [
+                1750953600,
+                8210
+            ]
+        ]
+    },
+    "airports": [
+        {
+            "departure": [
+                {
+                    "airport": {
+                        "id": "TPE",
+                        "name": "臺灣桃園國際機場"
+                    },
+                    "city": "台北市",
+                    "country": "台灣",
+                    "country_code": "TW",
+                    "image": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS2MmLbW-HcXlTwmod5sPj7skSX-bye9dnRXjaDxShX4zk8o66Ef213qGriwZt3zahLCL9v7wFHklhKEg",
+                    "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQMST5lzBTm3sd5w5tOO4YZFWdFgSntIVWqaCH97zNh9_Lx42rE-SexpiflhCSwJtBjNpUWo4f_uIhEu4ul5r4B5UgJCxOuDlKIRPgULbo"
+                }
+            ],
+            "arrival": [
+                {
+                    "airport": {
+                        "id": "HND",
+                        "name": "東京國際機場(羽田機場)"
+                    },
+                    "city": "東京都",
+                    "country": "日本",
+                    "country_code": "JP",
+                    "image": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTqHkzEeI2bSglPzmSGZL7bxXmn0wJgOn2ZtEN8I47uBnzY1CnHzGtD-YseJXqyexcAcw_uJp-D5HTkCg",
+                    "thumbnail": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRLnIToEgwiM_jV3cbw5eQZoUAIg6XqdrJAiClDyyg0w-JBSRN5ZeOT-iFb3SvwkwP1uoBCmT-gKE5VcyCYf-xq4guL4NAFICSaNyOnYOA"
+                }
+            ]
+        }
+    ]
+}
