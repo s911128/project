@@ -1,0 +1,38 @@
+# ---------- 2. FinMind USD/TWD 匯率 ----------
+import requests
+import pandas as pd
+from dateutil.relativedelta import relativedelta
+from datetime import date
+
+FINMIND_TOKEN = "<YOUR_FINMIND_TOKEN>"  # 登入後至使用者頁取得金鑰
+
+def fetch_usd_twd_rates(start: str = None, end: str = None) -> pd.DataFrame:
+    """抓取 FinMind TaiwanExchangeRate 資料集中 USD⇆TWD 匯率。"""
+    if end is None:
+        end = date.today().strftime("%Y-%m-%d")
+    if start is None:
+        # 預設取近 1 年
+        start = (date.today() - relativedelta(years=1)).strftime("%Y-%m-%d")
+
+    url = "https://api.finmindtrade.com/api/v4/data"  # [7]
+    params = {
+        "dataset": "TaiwanExchangeRate",
+        "data_id": "USD",
+        "start_date": start,
+        "end_date": end
+    }
+    headers = {"Authorization": f"Bearer {FINMIND_TOKEN}"}
+
+    resp = requests.get(url, params=params, headers=headers, timeout=20)
+    resp.raise_for_status()
+    data = resp.json()["data"]
+    df_rate = pd.DataFrame(data)
+    df_rate.rename(columns={"cash_buy": "cash_buy_twd", "cash_sell": "cash_sell_twd",
+                            "spot_buy": "spot_buy_twd", "spot_sell": "spot_sell_twd"},
+                   inplace=True)
+    return df_rate
+
+# 測試
+if __name__ == "__main__":
+    df_fx = fetch_usd_twd_rates()
+    print("USD/TWD 前 5 筆：\n", df_fx.head())

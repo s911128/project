@@ -1,0 +1,68 @@
+# ---------- 3A. Skyscanner Live Pricing API ----------
+import requests, time, json, pandas as pd
+from datetime import datetime
+
+SKY_API_KEY = "<YOUR_SKYSCANNER_API_KEY>"  # 申請後填入 [16]
+
+def create_session(origin="TPE-sky", dest="TYOA-sky",
+                   depart_date="2025-07-01", adults=1) -> str:
+    """建立 Live Pricing Session，回傳 sessionKey。"""
+    url = "https://partners.api.skyscanner.net/apiservices/pricing/v1.0"
+    headers = {"Content-Type": "application/x-www-form-urlencoded",
+               "Accept": "application/json"}
+    payload = {
+        "apiKey": SKY_API_KEY,
+        "country": "TW",
+        "currency": "TWD",
+        "locale": "zh-TW",
+        "originPlace": origin,
+        "destinationPlace": dest,
+        "outboundDate": depart_date,
+        "locationschema": "iata",
+        "adults": adults
+    }
+    r = requests.post(url, data=payload, headers=headers, timeout=30)
+    r.raise_for_status()
+    # Session Key 於 Location response header
+    session_key = r.headers["Location"].split("/")[-1]
+    return session_key
+
+def poll_session(session_key: str) -> pd.DataFrame:
+    """輪詢 Session 取得航班與價格詳細資訊。"""
+    poll_url = f"https://partners.api.skyscanner.net/apiservices/pricing/uk2/v1.0/{session_key}"
+    params = {"apiKey": SKY_API_KEY, "pageIndex": 0, "pageSize": 499}
+    while True:
+        resp = requests.get(poll_url, params=params, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+        if data["Status"] == "UpdatesComplete":
+            break
+        time.sleep(1)
+
+    # 將 Quotes 轉為 DataFrame
+    quotes = data["Itineraries"]
+    flights = []
+    for q in quotes:
+        price = q["PricingOptions"][0]["Price"]
+        link = q["PricingOptions"][0]["DeeplinkUrl"]
+        f_id = q["OutboundLegId"]
+        leg = next(l for l in data["Legs"] if l["Id"] == f_id)
+        carrier_id = leg["Carriers"][0]
+        carrier = next(c for c in data["Carriers"] if c["Id"] == carrier_id)["Name"]
+        depart = leg["Departure"]
+        arrive = leg["Arrival"]
+        flights.append({
+            "price_twd": price,
+            "airline": carrier,
+            "departure_utc": depart,
+            "arrival_utc": arrive,
+            "deeplink": link
+        })
+    return pd.DataFrame(flights)
+
+# 測試
+if __name__ == "__main__":
+    key = create_session(depart_date="2025-07-15")
+    df_flight = poll_session(key)
+    print("Skyscanner 抓到筆數：", len(df_flight))
+    print(df_flight.head())

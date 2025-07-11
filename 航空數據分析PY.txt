@@ -1,0 +1,82 @@
+# 計算相關性分析並創建詳細的分析報告
+import pandas as pd
+import numpy as np
+
+# 讀取數據
+df = pd.read_csv('台灣航空數據_過去一年.csv')
+
+# 將日期轉換為datetime格式
+df['日期'] = pd.to_datetime(df['日期'] + '-01')
+
+# 計算相關係數
+correlation_matrix = df[['航空燃油_國內線(元/公升)', '航空燃油_國際線(美元/公升)', 
+                        '台北-東京_經濟艙來回_平均(NT$)', '台北-大阪_經濟艙來回_平均(NT$)',
+                        '高雄-日本_經濟艙來回_平均(NT$)', 'USD_TWD_月平均']].corr()
+
+print("相關性分析矩陣:")
+print("=" * 80)
+print(correlation_matrix.round(3))
+print("\n")
+
+# 計算變化率
+print("月度變化分析:")
+print("=" * 50)
+
+# 燃油價格變化
+fuel_change = ((df['航空燃油_國內線(元/公升)'].iloc[-1] - df['航空燃油_國內線(元/公升)'].iloc[0]) / 
+               df['航空燃油_國內線(元/公升)'].iloc[0] * 100)
+
+# 機票價格變化
+flight_tpe_nrt_change = ((df['台北-東京_經濟艙來回_平均(NT$)'].iloc[-1] - df['台北-東京_經濟艙來回_平均(NT$)'].iloc[0]) / 
+                        df['台北-東京_經濟艙來回_平均(NT$)'].iloc[0] * 100)
+
+# 匯率變化
+exchange_change = ((df['USD_TWD_月平均'].iloc[-1] - df['USD_TWD_月平均'].iloc[0]) / 
+                   df['USD_TWD_月平均'].iloc[0] * 100)
+
+print(f"航空燃油價格變化: {fuel_change:.2f}%")
+print(f"台北-東京機票價格變化: {flight_tpe_nrt_change:.2f}%")
+print(f"美元兌新台幣匯率變化: {exchange_change:.2f}%")
+
+# 季節性分析
+print("\n季節性趨勢分析:")
+print("=" * 50)
+
+# 按季節分組
+df['月份'] = df['日期'].dt.month
+df['季節'] = df['月份'].apply(lambda x: '夏季(6-8月)' if x in [6,7,8] 
+                           else '秋季(9-11月)' if x in [9,10,11]
+                           else '冬季(12-2月)' if x in [12,1,2]
+                           else '春季(3-5月)')
+
+seasonal_analysis = df.groupby('季節')[['台北-東京_經濟艙來回_平均(NT$)', 
+                                    '台北-大阪_經濟艙來回_平均(NT$)', 
+                                    '航空燃油_國內線(元/公升)']].mean()
+
+print(seasonal_analysis.round(0))
+
+# 保存分析結果
+analysis_summary = {
+    '指標': ['燃油價格相關性(vs東京機票)', '燃油價格相關性(vs大阪機票)', 
+             '匯率相關性(vs東京機票)', '匯率相關性(vs大阪機票)',
+             '燃油價格年變化率(%)', '東京機票年變化率(%)', '匯率年變化率(%)'],
+    '數值': [
+        correlation_matrix.loc['航空燃油_國內線(元/公升)', '台北-東京_經濟艙來回_平均(NT$)'],
+        correlation_matrix.loc['航空燃油_國內線(元/公升)', '台北-大阪_經濟艙來回_平均(NT$)'],
+        correlation_matrix.loc['USD_TWD_月平均', '台北-東京_經濟艙來回_平均(NT$)'],
+        correlation_matrix.loc['USD_TWD_月平均', '台北-大阪_經濟艙來回_平均(NT$)'],
+        fuel_change,
+        flight_tpe_nrt_change,
+        exchange_change
+    ]
+}
+
+analysis_df = pd.DataFrame(analysis_summary)
+analysis_df.to_csv('航空數據分析結果.csv', index=False, encoding='utf-8-sig')
+
+print(f"\n關鍵發現:")
+print("=" * 50)
+print(f"1. 燃油價格與機票價格相關性: {correlation_matrix.loc['航空燃油_國內線(元/公升)', '台北-東京_經濟艙來回_平均(NT$)']:.3f}")
+print(f"2. 匯率與機票價格相關性: {correlation_matrix.loc['USD_TWD_月平均', '台北-東京_經濟艙來回_平均(NT$)']:.3f}")
+print(f"3. 過去一年燃油價格下降 {-fuel_change:.1f}%，機票價格下降 {-flight_tpe_nrt_change:.1f}%")
+print(f"4. 新台幣升值 {-exchange_change:.1f}%，對機票價格產生正面影響")

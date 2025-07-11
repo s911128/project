@@ -1,0 +1,36 @@
+# ---------- 3B. Selenium 傳統爬蟲 ----------
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+import pandas as pd, time
+
+def scrape_scoot_lowest(origin="TPE", dest="NRT", depart="2025-07-15") -> pd.DataFrame:
+    """自動化瀏覽 Scoot 訂票頁，擷取最低價資訊。"""
+    url = (
+        f"https://book.flyscoot.com/Book/Select?culture=zh-Hant"
+        f"&JourneySearchDTO.Origin={origin}&JourneySearchDTO.Destination={dest}"
+        f"&JourneySearchDTO.DepartureDate={depart}&JourneySearchDTO.ReturnDate="
+        "&JourneySearchDTO.TripType=OneWay&JourneySearchDTO.Adult=1"
+    )
+
+    opts = webdriver.ChromeOptions()
+    opts.add_argument("--headless=new")
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
+                              options=opts)
+    driver.get(url)
+    time.sleep(5)  # 等待頁面動態載入
+
+    rows = driver.find_elements(By.CSS_SELECTOR, ".fare-row")
+    results = []
+    for r in rows:
+        date_str = r.find_element(By.CSS_SELECTOR, ".flightdate").text.strip()
+        price = r.find_element(By.CSS_SELECTOR, ".flight_price").text.replace(",", "")
+        results.append({"date": date_str, "price_twd": int(price)})
+    driver.quit()
+    return pd.DataFrame(results)
+
+# 測試
+if __name__ == "__main__":
+    df_scoot = scrape_scoot_lowest()
+    print("Scoot 最低價：\n", df_scoot.head())

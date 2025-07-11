@@ -1,0 +1,15 @@
+# ---------- 4. 整合與匯出 ----------
+def merge_and_export():
+    df_fuel = fetch_cpc_jet_a1_prices()
+    df_fx   = fetch_usd_twd_rates()
+    key     = create_session(depart_date="2025-07-15")
+    df_ticket = poll_session(key)
+
+    # 僅示範寫檔；實務可依日期欄位進行時間對齊或重採樣
+    df_fuel.to_csv("taiwan_fuel_prices.csv", index=False)
+    df_fx.to_csv("usd_twd_exchange_rates.csv", index=False)
+    df_ticket.to_csv("taiwan_japan_flight_prices.csv", index=False)
+    print("✅ 所有檔案已輸出。")
+
+if __name__ == "__main__":
+    merge_and_export()
